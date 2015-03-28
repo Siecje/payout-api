@@ -17,32 +17,32 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('pk', 'name', 'description', 'creator', 'members', 'issues', 'created', 'updated')
+        fields = ('id', 'name', 'description', 'creator', 'members', 'issues', 'created', 'updated')
 
 
 class IssueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ('pk', 'name', 'text', 'project', 'payee', 'created', 'updated')
+        fields = ('id', 'name', 'text', 'project', 'payee', 'created', 'updated')
 
 
 class TipSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tip
-        fields = ('pk', 'amount', 'user', 'issue')
+        fields = ('id', 'amount', 'user', 'issue')
 
 
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('pk', 'text', 'issue', 'user')
+        fields = ('id', 'text', 'issue', 'user')
 
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('url', 'username',)
+        fields = ('username',)

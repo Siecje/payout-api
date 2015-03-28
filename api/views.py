@@ -22,24 +22,28 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    lookup_field = 'id'
 
 
 class IssueViewSet(viewsets.ModelViewSet):
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    lookup_field = 'id'
 
 
 class TipViewSet(viewsets.ModelViewSet):
     queryset = Issue.objects.all()
     serializer_class = TipSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    lookup_field = 'id'
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Issue.objects.all()
     serializer_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    lookup_field = 'id'
 
 
 class UserViewSet(viewsets.ModelViewSet):
