@@ -64,7 +64,7 @@ user_detail = views.UserViewSet.as_view({
 })
 
 urlpatterns = format_suffix_patterns([
-    #url(r'^$', views.api_root),
+    url(r'^$', views.api_root),
     url(r'^projects/?$',
         project_list,
         name='project-list'),
@@ -73,10 +73,10 @@ urlpatterns = format_suffix_patterns([
          name='project-detail'),
     url(r'^issues/?$',
         issue_list,
-        name='issues-list'),
+        name='issue-list'),
     url(r'^issues/(?P<uuid>[^/]+)/?$',
          issue_detail,
-         name='issues-detail'),
+         name='issue-detail'),
     url(r'^tips/?$',
         tip_list,
         name='tip-list'),
