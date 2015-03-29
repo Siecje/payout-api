@@ -3,17 +3,25 @@ from rest_framework import serializers
 from .models import Project, Issue, Tip, Comment
 
 
+class ShortSerializer(serializers.Serializer):
+    # __str__ = serializers.CharField()
+    get_absolute_url = serializers.CharField()
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     members = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='user-detail'
+        view_name='user-detail',
+        lookup_field='id'
     )
     issues = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='issue-detail'
+        view_name='issue-detail',
+        lookup_field='id'
     )
+    # issues = ShortSerializer()
 
     class Meta:
         model = Project

@@ -3,6 +3,7 @@ from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
+
 project_list = views.ProjectViewSet.as_view({
     'get': 'list',
     'post': 'create'
