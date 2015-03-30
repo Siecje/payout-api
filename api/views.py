@@ -7,7 +7,6 @@ from .models import Project, Issue, Tip, Comment
 from .serializers import ProjectSerializer, IssueSerializer, TipSerializer, \
                          CommentSerializer, UserSerializer
 
-
 @api_view(('GET',))
 def api_root(request, format=None):
     return Response({
@@ -33,14 +32,14 @@ class IssueViewSet(viewsets.ModelViewSet):
 
 
 class TipViewSet(viewsets.ModelViewSet):
-    queryset = Issue.objects.all()
+    queryset = Tip.objects.all()
     serializer_class = TipSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     lookup_field = 'id'
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Issue.objects.all()
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     lookup_field = 'id'

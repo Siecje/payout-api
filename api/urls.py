@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from rest_framework.authtoken import views as auth_views
 from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
@@ -99,6 +100,7 @@ urlpatterns = format_suffix_patterns([
 ])
 
 urlpatterns += [
+    url(r'^auth/token/?$', auth_views.obtain_auth_token),
     url(r'^auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
+                           namespace='rest_framework')),
 ]

@@ -3,9 +3,29 @@ from rest_framework import serializers
 from .models import Project, Issue, Tip, Comment
 
 
-class ShortSerializer(serializers.Serializer):
-    # __str__ = serializers.CharField()
-    get_absolute_url = serializers.CharField()
+class RelatedIssueSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Issue
+        fields = ('id', 'url', 'name')
+        lookup_field = 'id'
+
+
+class RelatedUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'username', 'url')
+        lookup_field = 'id'
+
+
+class RelatedCommentSerializer(serializers.HyperlinkedModelSerializer):
+    user = RelatedUserSerializer(
+        read_only=True
+    )
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'text', 'user')
+        lookup_field = 'id'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -15,13 +35,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         view_name='user-detail',
         lookup_field='id'
     )
-    issues = serializers.HyperlinkedRelatedField(
+    issues = RelatedIssueSerializer(
         many=True,
-        read_only=True,
-        view_name='issue-detail',
-        lookup_field='id'
+        read_only=True
     )
-    # issues = ShortSerializer()
 
     class Meta:
         model = Project
@@ -29,10 +46,14 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class IssueSerializer(serializers.ModelSerializer):
+    comments = RelatedCommentSerializer(
+        many=True,
+        read_only=True
+    )
 
     class Meta:
         model = Issue
-        fields = ('id', 'name', 'text', 'project', 'payee', 'created', 'updated')
+        fields = ('id', 'name', 'text', 'project', 'comments', 'payee', 'created', 'updated')
 
 
 class TipSerializer(serializers.ModelSerializer):

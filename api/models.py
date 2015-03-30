@@ -19,11 +19,9 @@ class Project(Common):
     creator = models.ForeignKey(User, related_name='created_projects')
     members = models.ManyToManyField(User, related_name='projects')
 
-    @property
     def __str__(self):
         return self.name
 
-    @property
     def get_absolute_url(self):
         return reverse('project-detail', kwargs={'id': self.id})
 
@@ -32,13 +30,11 @@ class Issue(Common):
     name = models.TextField()
     text = models.TextField()
     project = models.ForeignKey(Project, related_name='issues')
-    payee = models.ForeignKey(User, related_name='paid_issues')
+    payee = models.ForeignKey(User, related_name='paid_issues', blank=True, null=True)
 
-    @property
     def __str__(self):
         return self.name
 
-    @property
     def get_absolute_url(self):
         return reverse('issue-detail', kwargs={'id': self.id})
 
@@ -65,3 +61,15 @@ class Comment(Common):
 
     def get_absolute_url(self):
         return reverse('comment-detail', kwargs={'id': self.id})
+
+
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
