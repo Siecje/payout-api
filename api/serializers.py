@@ -39,6 +39,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True
     )
+    creator = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Project
