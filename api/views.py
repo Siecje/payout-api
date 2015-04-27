@@ -14,6 +14,7 @@ def api_root(request, format=None):
         'issues': reverse('issue-list', request=request, format=format),
         'tips': reverse('tip-list', request=request, format=format),
         'comments': reverse('comment-list', request=request, format=format),
+        'auth-token': reverse('auth-token', request=request, format=format)
     })
 
 
